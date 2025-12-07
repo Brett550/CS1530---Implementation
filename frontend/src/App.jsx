@@ -1,3 +1,106 @@
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import "./App.css"; // <- CSS file for styling
+
+// 🔹 Stable grade count-up (won't reset/glitch on re-renders)
+function useStableGradeCountUp(target, duration = 2000) {
+  const [value, setValue] = useState(0);
+  const lastTargetRef = useRef(null);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    const end = Number(target) || 0;
+
+    // Only (re)start when the target actually changes
+    if (lastTargetRef.current === end) return;
+    lastTargetRef.current = end;
+
+    cancelAnimationFrame(rafRef.current);
+    let startTime = null;
+    const startVal = 0;
+
+    const step = (ts) => {
+      if (!startTime) startTime = ts;
+      const t = Math.min(1, (ts - startTime) / duration);
+      const current = startVal + (end - startVal) * t;
+      setValue(current);
+      if (t < 1) rafRef.current = requestAnimationFrame(step);
+    };
+
+    rafRef.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [target, duration]);
+
+  return Math.round((value + Number.EPSILON) * 10) / 10; // one decimal
+}
+
+// 🔹 Generic count-up for bars (supports delay + proper cleanup)
+function useCountUp(target, duration = 1500, delay = 0, trigger = null) {
+  const [value, setValue] = useState(0);
+  const rafRef = useRef(null);
+  const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    if (trigger == null || target == null || isNaN(Number(target))) return;
+
+    const end = Number(target);
+    let startTime = null;
+
+    const start = () => {
+      const step = (ts) => {
+        if (!startTime) startTime = ts;
+        const t = Math.min(1, (ts - startTime) / duration);
+        const current = end * t; // from 0 → end
+        setValue(current);
+        if (t < 1) {
+          rafRef.current = requestAnimationFrame(step);
+        }
+      };
+      rafRef.current = requestAnimationFrame(step);
+    };
+
+    timeoutRef.current = setTimeout(start, delay);
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [trigger, duration, delay, target]);
+
+  return Math.round((value + Number.EPSILON) * 10) / 10;
+}
+
+// 🔹 Reusable bar (animated fill + number)
+function StrengthBar({ label, value, max = 100, delay = 0 }) {
+  const animatedVal = useCountUp(value ?? 0, 1500, delay, value);
+  const percent = Math.max(
+    0,
+    Math.min(100, max ? (animatedVal / max) * 100 : 0)
+  );
+
+  return (
+    <div
+      className="strength-bar fade-in"
+      style={{ animationDelay: `${delay / 1000}s` }}
+    >
+      <span>{label}</span>
+      <div className="bar">
+        <div
+          className="fill"
+          style={{
+            width: `${percent}%`,
+            transition: `width 1.5s ease ${delay}ms`,
+          }}
+        >
+          <span className="percent-text">
+            {max === 5 ? `${animatedVal} / 5` : `${animatedVal}%`}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
  const [professorId, setProfessorId] = useState("");
  const [canvasCourseId, setCanvasCourseId] = useState("");
