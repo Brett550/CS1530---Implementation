@@ -103,10 +103,11 @@ DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost
 cd backend
 python3 -m venv env
 source env/bin/activate
-pip install -r requirements.txt
+pip install fastapi uvicorn openai pydantic numpy pandas scikit-learn
 python3 manage.py migrate
 python3 manage.py runserver
 Runs at local host
+
 ---
 ## Frontend setup
 cd frontend
