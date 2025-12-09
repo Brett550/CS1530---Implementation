@@ -58,4 +58,64 @@ Our solution provides **instant, personalized insights** by predicting a student
 ## 📈 Why It Matters
 - **Confidence Gap**: Many students overestimate or underestimate their abilities, leading to poor preparation or unnecessary stress.  
 - **Feedback Deficit**: Feedback often comes too late to make meaningful changes.  
-- **Our Solution**: iGradeU bridges these gaps, turning raw academic data into clarity, confidence, and actionable strategies.  
+- **Our Solution**: iGradeU bridges these gaps, turning raw academic data into clarity, confidence, and actionable strategies.
+
+# 📌 CourseGradePredictor – Setup & Installation (Sprint 4)
+
+## ✅ Requirements
+
+| Component | Version |
+|----------|----------|
+| Python | 3.11+ recommended (3.9 works but throws OpenSSL warnings) |
+| Node.js | 20.19+ (Vite will break on Node 18) |
+| npm | 10+ |
+| Django | 4.2.x |
+| Supabase Python Client | latest |
+| OpenAI | latest |
+| Canvas API | active token |
+| pip | 24+ |
+
+
+
+---
+
+## 🌎 Environment Variables
+
+Create a `.env` file at the **root** (not in backend, not in frontend).
+
+```env
+# ==== BACKEND ====
+OPENAI_API_KEY=sk-xxxxxxxxxxxx
+CANVAS_API_URL=https://canvas.pitt.edu/api/v1
+CANVAS_TOKEN=YOUR_CANVAS_PERSONAL_ACCESS_TOKEN
+
+# ==== SUPABASE ====
+SUPABASE_URL=https://xxxxx.supabase.co
+SUPABASE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY   # DO NOT EXPOSE
+
+# ==== DJANGO ====
+DJANGO_DEBUG=True
+DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost
+
+```
+---
+## Backend setup
+cd backend
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+python3 manage.py migrate
+python3 manage.py runserver
+Runs at local host
+---
+## Frontend setup
+cd frontend
+nvm install 20
+nvm use 20
+npm install
+npm run dev
+
+
+
+
+
