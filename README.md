@@ -36,10 +36,13 @@ Our solution provides **instant, personalized insights** by predicting a student
 
 ---
 
-## 👥 Team
+##  Team
 - **Brian Jeong** – bjj46@pitt.edu  
 - **Hannah Kim** – hak241@pitt.edu  
-- **Sam Chung** – sac496@pitt.edu  
+- **Steven Rodgers** - ser95@pitt.edu
+- **Elizabeth O'Connell** - elo57@pitt.edu
+- **Brett Dione** - brd149@pitt.edu
+- **Arda Furtana** - arf112@pitt.edu
 
 ---
 
@@ -47,7 +50,8 @@ Our solution provides **instant, personalized insights** by predicting a student
 - **Backend**: Django + REST Framework  
 - **Frontend**: React  
 - **APIs**: Canvas API, RateMyProfessor API, OpenAI API  
-- **Data Processing**: Python (pandas, requests, NLP via OpenAI)  
+- **Data Processing**: Python (pandas, requests, NLP via OpenAI)
+- **DataBase** : Supabase
 
 ---
 
