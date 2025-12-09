@@ -100,22 +100,27 @@ DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost
 ```
 ---
 ## Backend setup
-cd backend
-python3 -m venv env
-source env/bin/activate
-pip install fastapi uvicorn openai pydantic numpy pandas scikit-learn
-python3 manage.py migrate
-python3 manage.py runserver
-Runs at local host
+-cd backend
+-python3 -m venv env
+-source env/bin/activate
+-pip install fastapi uvicorn openai pydantic numpy pandas scikit-learn
+-python3 manage.py migrate
+-python3 manage.py runserver
+-Runs at local host
 
 ---
 ## Frontend setup
-cd frontend
-nvm install 20
-nvm use 20
-npm install
-npm run dev
+-cd frontend
+-nvm install 20
+-nvm use 20
+-npm install
+-npm run dev
 
+---
+## Instructions
+-Find Rate My Professor ID in RPM's URL for the professor
+-Find Course ID in the Course URL in Canvas
+-Copy and paste syllabus
 
 
 
